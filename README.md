@@ -22,7 +22,7 @@ The constructor takes one parameter as an object:
 Node( object )
 ```
 
-* <code>object</code> is an object with 2 properties
+* <code>object</code> is an object with 3 properties
   * <code>id</code> is the mandatory unique identifier of the node.
   * <code>raw</code> is any data you want to embed in the node. It is optional.
   * <code>offset</code> is an offset to add for each next node added. See the method <code>addNext</code>. It is optional.
@@ -145,7 +145,7 @@ The result of the <code>compute</code> method is :
 ]
 ```
 
-Each element of the array is a <em>node</em> enhance with some value. 
+Each element of the array is a <em>node</em> enhanced with some value. 
 * <code>raw</code>, <code>id</code>, <code>offset</code> 
 are values given to the node when its constructor was called (<code>new Node( {id:'', offset:0, raw: {} } )</code>).
 * <code>next</code> was populated by the method <code>addNext</code>. This object contains all next node of this node.
@@ -164,7 +164,7 @@ results.forEach( function ( node ) {
 } );
 ```
 
-But if you want to keep the relation between node, you can do has follow to keep <code>node.id</code> in the place
+But if you want to keep the relation between nodes, you can do has follow to keep <code>node.id</code> in the place
 of <code>next</code> and <code>prev</code>.
 
 ```javascript
@@ -178,12 +178,7 @@ results.forEach( function ( node ) {
 
 # Examples
 
-Here is the graph we want to give a try :
-
-<img src='http://91.68.209.8/bmi/upload.wikimedia.org/wikipedia/commons/thumb/2/29/DijkstraBis01.svg/350px-DijkstraBis01.svg.png'>
-from [Wikipedia](http://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra)
-
-
+Here is the graph we want to give a try from [Wikipedia](http://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra)
 
 ```javascript
 var Node = require( 'shortest-way' ).Node;
@@ -220,5 +215,17 @@ e.addNext( j, 502 );
 var allNodes = [ a, b, c, d, e, f, g, h, i, j ];
 var results = a.compute( j, allNodes );
 
+var path = results.map( function ( node ) {
+  return node.id
+} ).join( ', ' );
+
+console.log( path );
 ```
+
+will output :
+
+```javascript
+A, C, H, J
+```
+
 

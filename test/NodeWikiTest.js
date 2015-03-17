@@ -61,6 +61,15 @@ describe( 'Node Wiki', function () {
 		assert.equal( results[3].id, 'J' );
 		
 		
+		var path = results.map( function ( node ) {
+			return node.id
+		} ).join( ', ' );
+		
+		//console.log( path );
+		assert.equal( path, 'A, C, H, J' );
+		
+		
+		
 //		results.forEach( function ( node ) {
 //			delete node.next;
 //			delete node.prev;
