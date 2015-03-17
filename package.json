@@ -1,0 +1,35 @@
+{
+  "name": "shortest-way",
+  "version": "1.0.0",
+  "description": "Implementation of the Dijkstra's Algorithm to compute the shortest path between a starting and ending node ina graph.",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test",
+	"lib": "lib",
+	"doc": "doc"
+  },
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha test"
+  },
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/corentinway/shortest-way"
+  },
+  "bugs":{
+	  "url": "https://github.com/corentinway/shortest-way/issues"
+  },
+  "keywords": [
+    "math",
+    "path",
+    "dijkstra"
+  ],
+  "author": "corentinway@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.6.0"
+  },
+  "dependencies": {}
+}
