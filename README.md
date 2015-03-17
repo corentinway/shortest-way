@@ -79,7 +79,35 @@ var path = startNode.compute( endNode, allNodes )
 
 The arguments are :
 * <code>endNode</code> is the destination for the shortest path you want to compute
-* <code>allNodes</code> is an array containing all the nodes of the graph
+* <code>allNodes</code> can be
+  * an <code>array</code> containing all the nodes of the graph
+  * an <code>object</code> containing all nodes of the graph. 
+  
+```javascript
+var startNode = new Node( { id: 'start' } );		
+var middleNode = new Node( { id: 'middle' } );		
+var endNode = new Node( { id: 'end' } );		
+
+// all nodes stored into an array
+var allNodes = [ statNode, middleNode, endNode ];
+
+var result = startNode.compute( endNode, allNodes );
+
+// OR all nodes stored into an object
+allNodes = {
+  'start': startNode, 
+  'middle': middleNode,
+  'end': endNode
+};
+```
+
+Both format for <code>allNodes</code> are supported. If <code>allNodes</code> is an <code>array</code>, then 
+it will be converted <strong>once</strong> before computing the shortest path because it if faster to compute
+with an object containing all nodes.
+
+
+
+  
 
 Both arguments are required.
 
