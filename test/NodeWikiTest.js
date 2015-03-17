@@ -54,11 +54,23 @@ describe( 'Node Wiki', function () {
 		
 		// assertions
 		assetIsSet( results, 4 );
-//		console.log( results );
+		//console.log( results );
 		assert.equal( results[0].id, 'A' );
 		assert.equal( results[1].id, 'C' );
 		assert.equal( results[2].id, 'H' );
 		assert.equal( results[3].id, 'J' );
+		
+		
+//		results.forEach( function ( node ) {
+//			delete node.next;
+//			delete node.prev;
+//		} );
+//		results.forEach( function ( node ) {
+//			node.next = Object.keys( node.next );
+//			node.prev = node.prev ? node.prev.id : undefined;
+//		} );
+//		
+//		console.log( JSON.stringify( results ) );
 		
 	} );
 	
