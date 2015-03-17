@@ -23,8 +23,9 @@ Node( object )
 ```
 
 * <code>object</code> is an object with 2 properties
-  * <code>id</code> is the mandatory unique identifier of the node
-  * <code>raw</code> is any data you want to embed in the node. It is optional
+  * <code>id</code> is the mandatory unique identifier of the node.
+  * <code>raw</code> is any data you want to embed in the node. It is optional.
+  * <code>offset</code> is an offset to add for each next node added. See the method <code>addNext</code>. It is optional.
 
 For example :
 
@@ -66,6 +67,114 @@ var endNode = new Node( { id: 'end' } );
 startNode.addNext( middleNode, 1 );
 middleNode.addNext( endNode, 1 );
 ```
+
+### compute the shortest path
+
+Once all nodes are created and linked together with the method <code>addNext</code>, you can call the 
+<code>compute</code> method on the <em>starting node</em>.
+
+```javascript
+var path = startNode.compute( endNode, allNodes )
+```
+
+The arguments are :
+* <code>endNode</code> is the destination for the shortest path you want to compute
+* <code>allNodes</code> is an array containing all the nodes of the graph
+
+Both arguments are required.
+
+The result of the <code>compute</code> method is :
+
+```javascript
+[ 
+{ 
+  raw: undefined,
+  id: 'A',
+  offset: 0,
+  value: 0,
+  next: { B: [Object], C: [Object], E: [Object] },
+  toString: [Function] 
+},
+{ 
+  raw: undefined,
+  id: 'C',
+  offset: 0,
+  value: 217,
+  next: { G: [Object], H: [Object] },
+  toString: [Function],
+  prev:
+  { raw: undefined,
+  id: 'A',
+  offset: 0,
+  value: 0,
+  next: [Object],
+  toString: [Function] } 
+  },
+{ 
+  raw: undefined,
+  id: 'H',
+  offset: 0,
+  value: 320,
+  next: { D: [Object], J: [Object] },
+  toString: [Function],
+  prev:
+  { raw: undefined,
+  id: 'C',
+  offset: 0,
+  value: 217,
+  next: [Object],
+  toString: [Function],
+  prev: [Object] } 
+},
+{ 
+  raw: undefined,
+  id: 'J',
+  offset: 0,
+  value: 487,
+  next: {},
+  toString: [Function],
+  prev:
+  { raw: undefined,
+  id: 'H',
+  offset: 0,
+  value: 320,
+  next: [Object],
+  toString: [Function],
+  prev: [Object] } 
+} 
+]
+```
+
+Each element of the array is a <em>node</em> enhance with some value. 
+* <code>raw</code>, <code>id</code>, <code>offset</code> 
+are values given to the node when its constructor was called (<code>new Node( {id:'', offset:0, raw: {} } )</code>).
+* <code>next</code> was populated by the method <code>addNext</code>. This object contains all next node of this node.
+* <code>toString</code> a function to nicely display a node
+* <code>prev</code> was created while computing the shortest path. It is a reference with the previous nearest node.
+
+
+Calling <code>JSON.stringify( results )</code> will lead to an error
+<em>TypeError: Converting circular structure to JSON</em>. To avoid this, you can remove the previous and next node for each
+element of the array.
+
+```javascript
+results.forEach( function ( node ) {
+  delete node.next;
+  delete node.prev;
+} );
+```
+
+But if you want to keep the relation between node, you can do has follow to keep <code>node.id</code> in the place
+of <code>next</code> and <code>prev</code>.
+
+```javascript
+results.forEach( function ( node ) {
+  node.next = Object.keys( node.next );
+  node.prev = node.prev ? node.prev.id : undefined;
+} );
+```
+
+
 
 # Examples
 
