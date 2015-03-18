@@ -1,6 +1,6 @@
 {
   "name": "shortest-way",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Implementation of the Dijkstra's Algorithm to compute the shortest path between a starting and ending node ina graph.",
   "main": "lib/index.js",
   "directories": {
