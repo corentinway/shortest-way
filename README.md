@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/corentinway/shortest-way.png?branch=master)](https://travis-ci.org/corentinway/shortest-way)
+
 # About
 
 Tihs module is an implementation of the Dijkstra's Algorithm to compute the shortest path
