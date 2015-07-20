@@ -18,7 +18,7 @@ var assetIsSet = function ( results, expectedLength ) {
 
 describe( 'Node', function () {
 
-	it( 'shoud compte a graph with 1 node', function () {
+	it( 'shoud compute a graph with 1 node', function () {
 		// input
 		var startNode = new Node( { id: 'start' } );		
 		// call
@@ -26,7 +26,7 @@ describe( 'Node', function () {
 		// assertions
 		assetIsSet( results, 1 );
 	} );
-	it( 'shoud compte a graph with a 2 nodes', function () {
+	it( 'shoud compute a graph with a 2 nodes', function () {
 		// input
 		var startNode = new Node( { id: 'start' } );		
 		var endNode = new Node( { id: 'end' } );		
@@ -38,7 +38,7 @@ describe( 'Node', function () {
 		assert.equal( results[0].id, 'start' );
 		assert.equal( results[1].id, 'end' );
 	} );
-	it( 'shoud compte a graph with a 3 nodes', function () {
+	it( 'shoud compute a graph with a 3 nodes', function () {
 		// input
 		var startNode = new Node( { id: 'start' } );		
 		var middleNode = new Node( { id: 'middle' } );		
@@ -53,7 +53,7 @@ describe( 'Node', function () {
 		assert.equal( results[1].id, 'middle' );
 		assert.equal( results[2].id, 'end' );
 	} );
-	it( 'shoud compte a graph with a 4 nodes graph with all nodes connected each other', function () {
+	it( 'shoud compute a graph with a 4 nodes graph with all nodes connected each other', function () {
 		var startNode = new Node( { id: 'start' }, true );		
 		var middle1Node = new Node( { id: 'middle1' } );		
 		var middle2Node = new Node( { id: 'middle2' } );		
@@ -89,6 +89,44 @@ describe( 'Node', function () {
 		assert.equal( results[0].id, 'start' );
 		assert.equal( results[1].id, 'middle2' );
 		assert.equal( results[2].id, 'end' );
+		
+	} );
+	it( 'shoud compute a graph with a 2 nodes with many path between both nodes (transitions)', function () {
+		// input
+		var startNode = new Node( { id: 'start' } );		
+		var endNode = new Node( { id: 'end' } );		
+		
+		var allNodes = [ startNode, endNode ];
+		
+		allNodes.push( startNode.addTransition( endNode, 1 ) );
+		allNodes.push( startNode.addTransition( endNode, 2 ) );
+		allNodes.push( startNode.addTransition( endNode, 3 ) );
+		// call
+		var results = startNode.compute( endNode, allNodes );
+		// assertions
+		assetIsSet( results, 3 );
+		assert.equal( results[0].id, 'start' );
+		assert.equal( results[1].id, 'transition:start>1>end' );
+		assert.equal( results[2].id, 'end' );
+	} );
+	
+	it( '#addTransition should setup options correctly', function () {
+		var startNode = new Node( { id: 'start' } );
+		var endNode = new Node( { id: 'end' } );		
+		
+		var options = {
+			id: 'foo',
+			prefixId: 'bar',
+			startWeight: 3
+		};
+		var transition = startNode.addTransition( endNode, 40, options );
+		
+		assert.isDefined( transition );
+		assert.isNotNull( transition );
+		assert.equal( transition.id, 'foo' );
+		assert.equal( startNode.next.foo.weight, 3 );
+		
+		
 		
 	} );
 	

@@ -234,3 +234,101 @@ will output :
 ```javascript
 A, C, H, J
 ```
+
+
+
+
+# Transition (since version 1.1.2)
+
+## General
+
+Untill the version 1.1.1, you could only add one weight between 2 nodes with the method <tt>addNext</tt>.
+
+Example that don't fail:
+```javascript
+var start = new Node( {id:'start'} );
+var end = new Node( {id:'end'} );
+
+start.addNext( end, 10 );
+```
+
+However, you may know another route from start node to end node. Maybe a faster route.
+That example that fail:
+```javascript
+var start = new Node( {id:'start'} );
+var end = new Node( {id:'end'} );
+
+start.addNext( end, 10 );
+start.addNext( end, 5 ); // Exception thrown
+```
+
+
+If you want to setup multiple routes between 2 nodes, we call it <tt>transition</tt>.
+
+You must use the method <tt>addTransition( targetNode, weight, [options] )</tt>.
+This method will create a next node (<tt>T</tt>) of <tt>this</tt> node with a weight of <tt>0</tt> and then will setup
+the next node of <tt>T</tt> node to the <tt>targetNode</tt> node with a weight of <tt>weight</tt>.
+
+
+
+The example bellow wont fail
+```javascript
+var startNode = new Node( { id: 'start' } );		
+var endNode = new Node( { id: 'end' } );		
+
+var allNodes = [ startNode, endNode ];
+
+allNodes.push( startNode.addTransition( endNode, 1 ) );
+allNodes.push( startNode.addTransition( endNode, 2 ) );
+allNodes.push( startNode.addTransition( endNode, 3 ) );
+```
+
+
+The result will be:
+
+```javascript
+[ { id: 'start',
+    offset: 0,
+    value: 0,
+    next:
+     { 'transition:start>1>end': [Object],
+       'transition:start>2>end': [Object],
+       'transition:start>3>end': [Object] },
+    toString: [Function] },
+  { id: 'transition:start>1>end',
+    offset: 0,
+    value: 0,
+    next: { end: [Object] },
+    toString: [Function],
+    prev:
+     { id: 'start',
+       offset: 0,
+       value: 0,
+       next: [Object],
+       toString: [Function] } },
+  { id: 'end',
+    offset: 0,
+    value: 1,
+    next: {},
+    toString: [Function],
+    prev:
+     { id: 'transition:start>1>end',
+       offset: 0,
+       value: 0,
+       next: [Object],
+       toString: [Function],
+       prev: [Object] } } ]
+```
+
+The transition node <tt>id</tt> is build with the name <tt>'transition:' + start_node.id + '>' + link weight + '>' + end_node.id</tt>.
+
+## Transition options
+
+The <tt>options</tt> opional parameter is an object that can have multiple properties :
+
+* <tt>id</tt> the transition id
+* <tt>prefixId</tt> the transition prefix (default is <tt>'transition'</tt>). Value ignored if <tt>id</tt> property setup.
+* <tt>startWeight</tt> the weight of the link between the <tt>startNode</tt> and the transition node.
+
+
+
