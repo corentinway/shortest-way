@@ -175,6 +175,8 @@ Each element of the array is a _node_ enhanced with some value.
 - `toString` a function to nicely display a node
 - `prev` was created while computing the shortest path. It is a reference with the previous nearest node.
 
+If there is no path between nodes, empty array will be returned.
+
 Calling `JSON.stringify( results )` will lead to an error _TypeError: Converting circular structure to JSON_. To avoid this, you can remove the previous and next node for each element of the array.
 
 ```javascript
