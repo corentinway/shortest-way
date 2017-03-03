@@ -157,10 +157,39 @@ describe( 'Node', function () {
 		n3.addNext( n1, 1 );
 		n3.addNext( n4, 1 );
 
-		var path = n1.compute(n2, [n1, n2, n3]);
+		var path = n1.compute(n2, [n1, n2, n3, n4]);
 		assert.equal(path.length, 0);
 	})
+	
+	it( 'should return empty list if there is no path between nodes (5 nodes)', function () {
+		var n1 = new Node( { id: 'n1' } );
+		var n2 = new Node( { id: 'n2' } );
+		var n3 = new Node( { id: 'n3' } );
+		var n4 = new Node( { id: 'n4' } );
+		var n5 = new Node( { id: 'n5' } );
 
+		n1.addNext( n2, 1 );
+		n1.addNext( n3, 1 );
+		n1.addNext( n4, 1 );
+		n2.addNext( n1, 1 );
+		n2.addNext( n3, 1 );
+		n2.addNext( n4, 1 );
+		n3.addNext( n1, 1 );
+		n3.addNext( n2, 1 );
+		n3.addNext( n4, 1 );
+		n4.addNext( n1, 1 );
+		n4.addNext( n2, 1 );
+		n4.addNext( n3, 1 );
+		
+		n5.addNext( n1, 1 );
+		n5.addNext( n2, 1 );
+		n5.addNext( n3, 1 );
+		n5.addNext( n4, 1 );
+
+		var path = n1.compute(n5, [n1, n2, n3, n4, n5]);
+		assert.equal(path.length, 0);
+	});
+	
 	it( '#connectWith should work correctly', function () {
 		var n1 = new Node( { id: 'n1' } );
 		var n2 = new Node( { id: 'n2' } );
