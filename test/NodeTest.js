@@ -124,11 +124,42 @@ describe( 'Node', function () {
 		assert.isDefined( transition );
 		assert.isNotNull( transition );
 		assert.equal( transition.id, 'foo' );
-		assert.equal( startNode.next.foo.weight, 3 );
-		
-		
-		
+		assert.equal( startNode.next.foo.weight, 3 );		
 	} );
+	
+	it( 'should return empty list if there is no path between nodes (2 nodes)', function () {
+		var n1 = new Node( { id: 'n1' } );
+		var n2 = new Node( { id: 'n2' } );
+
+		var path = n1.compute(n2, [n1, n2]);
+		assert.equal(path.length, 0);
+	})
+
+	it( 'should return empty list if there is no path between nodes (3 nodes)', function () {
+		var n1 = new Node( { id: 'n1' } );
+		var n2 = new Node( { id: 'n2' } );
+		var n3 = new Node( { id: 'n3' } );
+
+		n2.addNext( n3, 1 );
+		n3.addNext( n1, 1 );
+
+		var path = n1.compute(n2, [n1, n2, n3]);
+		assert.equal(path.length, 0);
+	})
+
+	it( 'should return empty list if there is no path between nodes (4 nodes)', function () {
+		var n1 = new Node( { id: 'n1' } );
+		var n2 = new Node( { id: 'n2' } );
+		var n3 = new Node( { id: 'n3' } );
+		var n4 = new Node( { id: 'n4' } );
+
+		n2.addNext( n3, 1 );
+		n3.addNext( n1, 1 );
+		n3.addNext( n4, 1 );
+
+		var path = n1.compute(n2, [n1, n2, n3]);
+		assert.equal(path.length, 0);
+	})
 	
 } );
 
