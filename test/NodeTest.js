@@ -160,9 +160,42 @@ describe( 'Node', function () {
 		var path = n1.compute(n2, [n1, n2, n3]);
 		assert.equal(path.length, 0);
 	})
-	
-} );
 
+	it( '#connectWith should work correctly', function () {
+		var n1 = new Node( { id: 'n1' } );
+		var n2 = new Node( { id: 'n2' } );
+
+		n1.connectWith( n2, 1 );
+
+		assert.equal( n1.id in n2.next, true );
+		assert.equal( n2.id in n1.next, true );
+	});
+	
+	it( 'indirected graphs', function () {
+		// for issue #1 - 
+		// https://github.com/corentinway/shortest-way/issues/1
+
+		var nodes = {
+			startNode: new Node( { id: 'startNode' } ),
+			middleNode1: new Node( { id: 'middleNode1' } ),
+			middleNode2: new Node( { id: 'middleNode2' } ),
+			middleNode3: new Node( { id: 'middleNode3' } ),
+			endNode: new Node( { id: 'endNode' } )
+		};
+
+		// add relation
+		nodes.startNode.connectWith(nodes.middleNode1, 1.9);
+		nodes.startNode.connectWith(nodes.middleNode2, 1.7);
+		nodes.middleNode1.connectWith(nodes.endNode, 1);
+		nodes.middleNode2.connectWith(nodes.middleNode3, 0.01);
+		nodes.middleNode3.connectWith(nodes.endNode, 1);
+
+		var pathFromArray = nodes.endNode.compute(nodes.startNode, 
+			Object.keys(nodes).map((key) => nodes[key]));
+		assert.deepEqual(pathFromArray.map((node) => node.id), 
+			['endNode', 'middleNode3','middleNode2', 'startNode']);
+		});
+} );
 
 /*
 
