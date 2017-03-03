@@ -64,6 +64,15 @@ startNode.addNext( middleNode, 1 );
 middleNode.addNext( endNode, 1 );
 ```
 
+### Indirected graphs
+
+Non-directional relations between two nodes can be set using `connectWith`:
+
+```javascript
+node.connectWith( anotherNode, weight );
+
+```
+
 ## compute the shortest path
 Once all nodes are created and linked together with the method `addNext`, you can call the `compute` method on the _starting node_.
 
@@ -329,6 +338,3 @@ The <tt>options</tt> opional parameter is an object that can have multiple prope
 * <tt>id</tt> the transition id
 * <tt>prefixId</tt> the transition prefix (default is <tt>'transition'</tt>). Value ignored if <tt>id</tt> property setup.
 * <tt>startWeight</tt> the weight of the link between the <tt>startNode</tt> and the transition node.
-
-
-
