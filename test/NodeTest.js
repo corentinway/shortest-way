@@ -133,7 +133,7 @@ describe( 'Node', function () {
 
 		var path = n1.compute(n2, [n1, n2]);
 		assert.equal(path.length, 0);
-	})
+	});
 
 	it( 'should return empty list if there is no path between nodes (3 nodes)', function () {
 		var n1 = new Node( { id: 'n1' } );
@@ -145,7 +145,7 @@ describe( 'Node', function () {
 
 		var path = n1.compute(n2, [n1, n2, n3]);
 		assert.equal(path.length, 0);
-	})
+	});
 
 	it( 'should return empty list if there is no path between nodes (4 nodes)', function () {
 		var n1 = new Node( { id: 'n1' } );
@@ -159,7 +159,7 @@ describe( 'Node', function () {
 
 		var path = n1.compute(n2, [n1, n2, n3, n4]);
 		assert.equal(path.length, 0);
-	})
+	});
 	
 	it( 'should return empty list if there is no path between nodes (5 nodes)', function () {
 		var n1 = new Node( { id: 'n1' } );
