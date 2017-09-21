@@ -64,6 +64,15 @@ startNode.addNext( middleNode, 1 );
 middleNode.addNext( endNode, 1 );
 ```
 
+### Indirected graphs
+
+Non-directional relations between two nodes can be set using `connectWith`:
+
+```javascript
+node.connectWith( anotherNode, weight );
+
+```
+
 ## compute the shortest path
 Once all nodes are created and linked together with the method `addNext`, you can call the `compute` method on the _starting node_.
 
@@ -165,6 +174,8 @@ Each element of the array is a _node_ enhanced with some value.
 - `next` was populated by the method `addNext`. This object contains all next node of this node.
 - `toString` a function to nicely display a node
 - `prev` was created while computing the shortest path. It is a reference with the previous nearest node.
+
+If there is no path between nodes, empty array will be returned.
 
 Calling `JSON.stringify( results )` will lead to an error _TypeError: Converting circular structure to JSON_. To avoid this, you can remove the previous and next node for each element of the array.
 
@@ -329,6 +340,3 @@ The <tt>options</tt> opional parameter is an object that can have multiple prope
 * <tt>id</tt> the transition id
 * <tt>prefixId</tt> the transition prefix (default is <tt>'transition'</tt>). Value ignored if <tt>id</tt> property setup.
 * <tt>startWeight</tt> the weight of the link between the <tt>startNode</tt> and the transition node.
-
-
-
